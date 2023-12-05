@@ -19,4 +19,4 @@ const register = async (req, res) => {
             return false;
         }
     }
-}
+} catch
