@@ -6,8 +6,13 @@ const cookieParser = require("cookie-parser");
 
 const databaseMiddleware = require("./middleware/database-middleware");
 const { applyCors } = require("./middleware/cors");
+const userRouter = require("./routes/userRoutes");
+const workoutRouter = require("./routes/workoutRoutes");
+const dbConnection = require("./config/dbconfig");
+const { applyHelmet } = require("./middleware/helmet");
 
 const app = express();
+dbConnection();
 applyCors(app);
 applyHelmet(app);
 app.use(cookieParser());
@@ -18,7 +23,7 @@ app.get("/", (req, res) => {
 	res.send("Workout App - Final Project");
 });
 
-app.use("/user");
-app.use("/workout");
+app.use("/user", userRouter);
+// app.use("/workout", workoutRouter);
 
 app.listen(3000, () => console.log("Server is running on port 3000"));
