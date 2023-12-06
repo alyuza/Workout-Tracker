@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { API } from '../../../utils/API';
 import { Box, Button, Card, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
 import './style.css';
 
 interface RegisterInterface {
@@ -49,10 +50,10 @@ const Register: React.FC = () => {
 
       const data = await response.json();
       console.log('Success register:', data);
-      alert('Success');
+      Swal.fire("Register Success!");
     } catch (error) {
       console.error(error);
-      alert('Not Success');
+      Swal.fire("Register Failed!");
     }
   };
 
@@ -74,7 +75,7 @@ const Register: React.FC = () => {
         <Card
           style={{
             padding: '20px',
-            maxWidth: '400px',
+            maxWidth: '350px',
             backgroundColor: 'white',
             borderRadius: '24px',
           }}
