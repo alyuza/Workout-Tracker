@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { API } from '../../../utils/API';
 import { Box, Card, TextField, Button, Typography } from '@mui/material';
+import Swal from 'sweetalert2'
 import './style.css';
 
 interface LoginInterface {
@@ -46,10 +47,10 @@ const Login: React.FC = () => {
       const data = await response.json();
       localStorage.setItem('token', data.data);
       navigate('/dashboard');
-      alert('Success');
+      Swal.fire("Login Success!");
     } catch (error) {
       console.error(error);
-      alert('Not Success');
+      Swal.fire("Login Failed!");
     }
   };
 
@@ -71,7 +72,7 @@ const Login: React.FC = () => {
         <Card
           style={{
             padding: '20px',
-            maxWidth: '400px',
+            maxWidth: '350px',
             backgroundColor: 'white',
             borderRadius: '24px',
           }}
