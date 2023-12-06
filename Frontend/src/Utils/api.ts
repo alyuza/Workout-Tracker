@@ -1,5 +1,7 @@
 // development
-// export const API = 'http://localhost:3000'
+// const API = 'http://localhost:3000'
 
 // production
-export const API = 'https://upset-pocket-lion.cyclic.app'
+const API = 'https://upset-pocket-lion.cyclic.app'
+
+export default API
