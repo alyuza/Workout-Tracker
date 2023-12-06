@@ -1,13 +1,13 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { ButtonUsage } from './components/ButtonUsage'
+import { Login } from './pages/Auth'
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
-          <Route path='/' element={<ButtonUsage />}/>
+          <Route path='/' element={< Login/>}/>
         </Routes>
       </Router>
     </>
