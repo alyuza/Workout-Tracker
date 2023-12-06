@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Permission = require("../model/permission");
+// const Permission = require("../model/permission");
 const Users = require("../model/user");
 const { JWT_SIGN } = require("../config/config");
 const { generaterResetToken } = require("../middleware/uid");
@@ -26,10 +26,6 @@ const register = async (req, res) => {
 				message: "Fullname is required",
 			});
 		}
-		const defaultRole = await Permission.findOne({ role: "user" });
-		if (!defaultRole) {
-			return res.status(404).json({ message: "Role not Found" });
-		}
 		const user = await Users.findOne({ username: usernameValue });
 		if (user) {
 			throw new Error("Username Already Exist");
@@ -39,7 +35,7 @@ const register = async (req, res) => {
 			fullname: fullname,
 			username: usernameValue,
 			password: hashedPassword,
-			role: defaultRole,
+			role: 'user'
 		});
 		await newUser.save();
 		res.status(200).json({
@@ -61,38 +57,11 @@ const login = async (req, res) => {
 
 		if (user) {
 			if (isPasswordCorrect) {
-				const accessToken = jwt.sign(
-					{
-						username: user.username,
-						id: user._id,
-						role: user.role.role,
-					},
-					JWT_SIGN,
-					{ expiresIn: "1hr" }
-				);
-				const refreshToken = jwt.sign(
-					{
-						username: user.username,
-						id: user._id,
-						role: user.role.role,
-					},
-					JWT_SIGN,
-					{ expiresIn: "7d" }
-				);
-				// console.log(accessToken);
-				res.cookie("accessToken", accessToken, {
-					httpOnly: true,
-					secure: true,
-					sameSite: "None",
-					maxAge: 1 * 60 * 60 * 1000,
+				const token = jwt.sign({ username: user.username, role: user.role }, JWT_SIGN)
+				res.status(200).json({
+					message: 'Login Success.',
+					data: token
 				});
-				// console.log(refreshToken);
-				res.cookie("refreshToken", refreshToken, {
-					httpOnly: true,
-					secure: false,
-					maxAge: 7 * 24 * 60 * 60 * 1000,
-				});
-				res.json("Login Successful");
 			} else {
 				res.status(401).json({ error: "Password is incorrect" });
 			}
@@ -105,14 +74,7 @@ const login = async (req, res) => {
 	}
 };
 
-const logout = async (req, res) => {
-	res.clearCookie("accessToken");
-	res.clearCookie("refreshToken");
-	res.json();
-};
-
 module.exports = {
 	register,
-	login,
-	logout,
+	login
 };

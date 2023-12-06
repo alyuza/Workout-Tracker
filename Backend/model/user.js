@@ -15,8 +15,7 @@ const userSchema = new mongoose.Schema({
 		required: true,
 	},
 	role: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Permission",
+		type: String,
 	},
 	resetPasswordToken: {
 		type: String,
