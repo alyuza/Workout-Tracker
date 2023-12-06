@@ -1,107 +1,134 @@
-import React from 'react'
-import {useFormik} from 'formik'
-import * as yup from 'yup'
-import { useNavigate } from 'react-router-dom'
-import { API } from '../../../utils/API'
-import { Box, Card, TextField, Button } from '@mui/material'
+import React from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
+import { API } from '../../../utils/API';
+import { Box, Card, TextField, Button, Typography } from '@mui/material';
+import './style.css';
 
 interface LoginInterface {
-  username: string,
-  password: string
+  username: string;
+  password: string;
 }
 
-const initialValues = {
+const initialValues: LoginInterface = {
   username: '',
-  password: ''
-}
+  password: '',
+};
 
 const validationSchema = yup.object({
-  username: yup
-    .string()
-    .required(`sorry, username can't be blank`),
-  password: yup
-    .string()
-    .required(`please enter your password here`)
-})
+  username: yup.string().required("Sorry, username can't be blank"),
+  password: yup.string().required("Please enter your password here"),
+});
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+
   const handleSubmit = async (values: LoginInterface) => {
     const body = {
       username: values.username,
       password: values.password,
-    }
-    await fetch(API + '/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Error while login');
-        }
-        return response.json();
-      }).then((data) => {
-        localStorage.setItem('token', data.data); // input data token to local storage
-        navigate('/dashboard');
-        alert('Success')
-      }).catch((error) => {
-        console.log(error);
-        alert('Not Success')
-      });
-  }
+    };
 
-  const formMik = useFormik({
-    initialValues: initialValues,
+    try {
+      const response = await fetch(`${API}/api/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error while login');
+      }
+
+      const data = await response.json();
+      localStorage.setItem('token', data.data);
+      navigate('/dashboard');
+      alert('Success');
+    } catch (error) {
+      console.error(error);
+      alert('Not Success');
+    }
+  };
+
+  const formik = useFormik({
+    initialValues,
     onSubmit: handleSubmit,
-    validationSchema: validationSchema
-  })
+    validationSchema,
+  });
 
   return (
-    <>
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      height="100vh"
-    >
-      <Card style={{ padding: '20px', maxWidth: '400px' }}>
-        <TextField label="Username" variant="outlined" fullWidth margin="normal" />
-
-        <TextField
-          label="Password"
-          variant="outlined"
-          type="password"
-          value={formMik.values.password}
-          onChange={formMik.handleChange('password')}
-          fullWidth
-          margin="normal"
-        />
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => console.log('Login clicked')}
-          fullWidth
-          style={{ marginTop: '16px' }}
+    <form onSubmit={formik.handleSubmit}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+        style={{ backgroundColor: '#263238' }}
+      >
+        <Card
+          style={{
+            padding: '20px',
+            maxWidth: '400px',
+            backgroundColor: 'white',
+            borderRadius: '24px',
+          }}
         >
-          Login
-        </Button>
+          <Typography
+            className="login-head"
+            variant="h5"
+            component="div"
+            style={{ textAlign: 'center', margin: '16px' }}
+          >
+            Login to Workout Tracker
+          </Typography>
 
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={() => console.log('Register clicked')}
-          fullWidth
-          style={{ marginTop: '8px' }}
-        >
-          Register
-        </Button>
-      </Card>
-    </Box>
-    </>
+          <TextField
+            label="Username"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            {...formik.getFieldProps('username')}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
+          />
+
+          <TextField
+            label="Password"
+            variant="outlined"
+            type="password"
+            fullWidth
+            margin="normal"
+            {...formik.getFieldProps('password')}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
+
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{
+              marginTop: '16px',
+              borderRadius: '24px',
+              backgroundColor: '#b71c1c',
+            }}
+          >
+            Login
+          </Button>
+
+          <Typography style={{ textAlign: 'center', padding: '20px' }}>
+            Don't have an account?
+            <a onClick={() => navigate('/register')}>
+              <strong className="register-text"> Register</strong>
+            </a>
+          </Typography>
+        </Card>
+      </Box>
+    </form>
   );
 };
 
