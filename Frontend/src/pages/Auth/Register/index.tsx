@@ -21,9 +21,19 @@ const initialValues: RegisterInterface = {
 
 const validationSchema = yup.object({
   fullName: yup.string().required('Please insert your fullname'),
-  username: yup.string().required('Please insert your username'),
-  password: yup.string().required('Please enter your password'),
+  username: yup
+    .string()
+    .required('Please insert your username')
+    .matches(/^\S*$/, 'Username cannot contain spaces'),
+  password: yup
+    .string()
+    .required('Please enter your password')
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[a-zA-Z]).{6,}$/,
+      'Password must have minimum 6 characters, at least 1 uppercase letter, and 1 numeric digit'
+    ),
 });
+
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -65,12 +75,11 @@ const Register: React.FC = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <Box
+      <Box className='boxBackground'
         display="flex"
         justifyContent="center"
         alignItems="center"
         height="100vh"
-        style={{ backgroundColor: '#263238' }}
       >
         <Card
           style={{
