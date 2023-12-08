@@ -3,3 +3,11 @@
   color: #ac0b41;
   cursor: pointer;
 }
+
+.boxBackground {
+  background-image: url("../../../../image/auth/login-register-bg.jpg");
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+}
+
