@@ -5,16 +5,24 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+// import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
+// import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import PoolIcon from '@mui/icons-material/Pool';
+import CalculateIcon from '@mui/icons-material/Calculate';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const drawerWidth = 240;
 
@@ -27,6 +35,7 @@ interface Props {
 }
 
 export default function SideNav(props: Props) {
+  const navigate = useNavigate();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -34,22 +43,47 @@ export default function SideNav(props: Props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleLogout = () => {
+    Swal.fire({
+      title: 'Do you really want to Logout ?',
+      showCancelButton: true,
+      confirmButtonText: 'Logout',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Logout Success')
+        localStorage.removeItem('token');
+        navigate('/');
+      }
+    });
+  };
+
+  const icons = [
+    <DirectionsRunIcon />,
+    <DirectionsBikeIcon />,
+    <PoolIcon />,
+    <CalculateIcon />,
+    <RestaurantMenuIcon />,
+  ];
+
   const drawer = (
     <div>
       <Toolbar />
+      <Button onClick={handleLogout} >
+        LOGOUT
+      </Button>
       <Divider />
       <List>
-        {['Running', 'Cycling', 'Swimming', 'BMI Calculator', 'Nutrition Tips'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      {['Running', 'Cycling', 'Swimming', 'BMI Calculator', 'Nutrition Tips'].map((text, index) => (
+        <ListItem key={text} disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              {icons[index]}
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItemButton>
+        </ListItem>
+      ))}
+    </List>
       <Divider />
     </div>
   );
