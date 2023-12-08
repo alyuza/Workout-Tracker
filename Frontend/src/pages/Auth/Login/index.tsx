@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import API from '../../../utils/API';
+import { API } from '../../../utils/API';
 import { Box, Card, TextField, Button, Typography } from '@mui/material';
 import Swal from 'sweetalert2'
 import './style.css';
@@ -62,7 +62,7 @@ const Login: React.FC = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <Box
+      <Box className='boxBackground'
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -83,7 +83,7 @@ const Login: React.FC = () => {
             component="div"
             style={{ textAlign: 'center', margin: '16px' }}
           >
-            Login to Workout Tracker
+            Login to Versto
           </Typography>
 
           <TextField
