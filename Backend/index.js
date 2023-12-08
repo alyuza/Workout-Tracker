@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
+const authMiddleware = require("./middleware/authentication-middleware");
 const databaseMiddleware = require("./middleware/database-middleware");
 const { corsOptions } = require("./middleware/cors");
 const userRouter = require("./routes/userRoutes");
@@ -24,6 +25,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", userRouter);
-// app.use("/workout", workoutRouter);
+app.use("/api", authMiddleware, workoutRouter);
 
 app.listen(3000, () => console.log("Server is running on port 3000"));
