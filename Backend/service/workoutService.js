@@ -1,92 +1,114 @@
 const { ObjectId } = require("mongodb");
-const Workout = require("../model/workout");
 
 const getWorkout = async (req, res) => {
-	const id = req.user.id;
-	const role = req.user.role;
-
+	const usernameInput = req.username; // Get username data from decoded token
+	const roleInput = req.role; // Get role data from decoded token
 	try {
-		let workouts;
-		if (role === "admin") {
-			workouts = await Workout.find().populate();
-		} else if (role === "user") {
-			workouts = await Workout.find({ createdBy: id });
+		if (roleInput === "user") {
+			const workoutlist = await req.db
+				.collection("workouts")
+				.find({ maker: usernameInput })
+				.toArray();
+			res.status(200).json({
+				message: "Success Read All Workout List",
+				data: workoutlist,
+			});
+		} else {
+			const workoutlist = await req.db.collection("workouts").find().toArray();
+			res.status(200).json({
+				message: "Success Read All Workout LIst.",
+				data: workoutlist,
+			});
 		}
-		return res.status(200).json({ message: "Workout Details", workouts });
 	} catch (error) {
-		console.error("Internal Server Error:", error);
-		return res.status(500).json({ message: "Internal Server Error" });
+		res.status(400).json({ error: error.message });
 	}
 };
 
 const createWorkout = async (req, res) => {
-	const { title, description, distance, time, calorie } = req.body;
-
+	const usernameInput = req.username;
 	try {
-		const newWorkout = new Workout({
+		const { title, description, distance, time, calorie } = req.body;
+		const newWorkout = await req.db.collection("workouts").insertOne({
 			title,
 			description,
 			distance,
 			time,
 			calorie,
+			maker: usernameInput,
 		});
-		await newWorkout.save();
-		req.status(200).json({
-			message: "Workout Done",
+
+		res.status(200).json({
+			ID: newWorkout.insertedId,
+			message: `Add Workout Success.`,
 			data: newWorkout,
 		});
 	} catch (error) {
-		res.status(401).json({ error: error.message });
+		res.status(400).json({ error: error.message });
 	}
 };
 
 const updateWorkout = async (req, res) => {
+	const id = req.params.id;
+	const { title, description, distance, time, calorie } = req.body;
+	const usernameInput = req.username;
 	try {
-		const id = req.params.id;
-		const { title, description, distance, time, calorie } = req.body;
-
-		const workout = await Workout.findById(id);
+		const workout = await db
+			.collection("workouts")
+			.findOne({ _id: new ObjectId(id) });
 		if (!workout) {
-			return res.status(404).json({ message: "Workout didn't exist " });
+			return res.status(400).json({
+				message: `Workout with ID ${id} not found.`,
+			});
 		}
-
-		const updatedWorkout = await Workout.findOneAndUpdate(
-			{ _id: id },
-			{ title, description, distance, time, calorie },
-			{ new: true }
+		// if (usernameInput === "admin" && task.maker !== "admin") {
+		// 	return res.status(403).json({
+		// 		message: "Admin can only edit tasks made by admins.",
+		// 	});
+		// }
+		await db.collection("workouts").findOneAndUpdate(
+			{ _id: new ObjectId(id) },
+			{
+				$set: {
+					title,
+					description,
+					distance,
+					time,
+					calorie,
+				},
+			}
 		);
-
 		res.status(200).json({
-			message: "Workout successfully updated",
-			data: updatedWorkout,
+			message: "Successfully Update Workout",
 		});
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({ message: "Error updating Workout" });
+		res.status(400).json({ error: error.message });
 	}
 };
 
 const deleteWorkout = async (req, res) => {
-	const { id } = req.params;
-	// const userId = req.user.id;
-	// const role = req.user.role;
-
+	const id = req.params.id;
+	const usernameInput = req.username;
 	try {
-		const workout = await Workout.findById(id);
-		console.log(id);
-		if (!workout) {
-			return res.status(404).json({ message: "Workout is not exist" });
+		const workoutToDelete = await db
+			.collection("workouts")
+			.findOne({ _id: new ObjectId(id) });
+		if (!workoutToDelete) {
+			return res.status(400).json({
+				message: `Workout with ID ${id} not found.`,
+			});
 		}
-		// if (todo.createdBy.toString() !== userId && role !== "admin") {
-		// 	return res
-		// 		.status(403)
-		// 		.json({ message: "Only Admin and Creator can Delete task" });
-		// }
-		await Workout.deleteOne({ _id: id });
-		return res.status(200).json({ message: "Workout Deleted Successfully" });
+		if (usernameInput === "admin" && taskToDelete.maker !== "admin") {
+			return res.status(403).json({
+				message: "Admin can only delete tasks made by admins.",
+			});
+		}
+		await db.collection("workouts").deleteOne({ _id: new ObjectId(id) });
+		res.status(200).json({
+			message: `Workout with ID ${id} has been deleted successfully.`,
+		});
 	} catch (error) {
-		console.error("Internal Server Error:", error);
-		return res.status(500).json({ message: "Internal Server Error" });
+		res.status(400).json({ error: error.message });
 	}
 };
 

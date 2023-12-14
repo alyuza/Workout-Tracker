@@ -11,7 +11,7 @@ const workoutRouter = Router();
 
 workoutRouter.get("/tasks", authenticationMiddleware, getWorkout);
 workoutRouter.post("/tasks", authenticationMiddleware, createWorkout);
-workoutRouter.put("tasks/:id", authenticationMiddleware, updateWorkout);
-workoutRouter.delete("tasks/:id", authenticationMiddleware, deleteWorkout);
+workoutRouter.put("/tasks/:id", authenticationMiddleware, updateWorkout);
+workoutRouter.delete("/tasks/:id", authenticationMiddleware, deleteWorkout);
 
 module.exports = workoutRouter;
