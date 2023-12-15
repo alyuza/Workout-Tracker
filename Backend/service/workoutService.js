@@ -1,25 +1,22 @@
 const { ObjectId } = require("mongodb");
 
 const getWorkout = async (req, res) => {
-	const usernameInput = req.username; // Get username data from decoded token
-	const roleInput = req.role; // Get role data from decoded token
+	const usernameInput = req.username;
+	const roleInput = req.role;
 	try {
+		let workoutlist;
 		if (roleInput === "user") {
-			const workoutlist = await req.db
+			workoutlist = await req.db
 				.collection("workouts")
 				.find({ maker: usernameInput })
 				.toArray();
-			res.status(200).json({
-				message: "Success Read All Workout List",
-				data: workoutlist,
-			});
 		} else {
-			const workoutlist = await req.db.collection("workouts").find().toArray();
-			res.status(200).json({
-				message: "Success Read All Workout LIst.",
-				data: workoutlist,
-			});
+			workoutlist = await req.db.collection("workouts").find().toArray();
 		}
+		res.status(200).json({
+			message: "Success Read All Workout List",
+			data: workoutlist,
+		});
 	} catch (error) {
 		res.status(400).json({ error: error.message });
 	}
@@ -28,13 +25,17 @@ const getWorkout = async (req, res) => {
 const createWorkout = async (req, res) => {
 	const usernameInput = req.username;
 	try {
-		const { title, description, distance, time, calorie } = req.body;
+		const { title, description, distance, time } = req.body;
+		const calorieCostPerKm = 70;
+		const activityType = "running";
+		const calories = (calorieCostPerKm * distance * time) / 60;
 		const newWorkout = await req.db.collection("workouts").insertOne({
 			title,
 			description,
 			distance,
+			activityType,
 			time,
-			calorie,
+			calorie: calories,
 			maker: usernameInput,
 		});
 
@@ -53,7 +54,7 @@ const updateWorkout = async (req, res) => {
 	const { title, description, distance, time, calorie } = req.body;
 	const usernameInput = req.username;
 	try {
-		const workout = await db
+		const workout = await req.db
 			.collection("workouts")
 			.findOne({ _id: new ObjectId(id) });
 		if (!workout) {
@@ -61,12 +62,7 @@ const updateWorkout = async (req, res) => {
 				message: `Workout with ID ${id} not found.`,
 			});
 		}
-		// if (usernameInput === "admin" && task.maker !== "admin") {
-		// 	return res.status(403).json({
-		// 		message: "Admin can only edit tasks made by admins.",
-		// 	});
-		// }
-		await db.collection("workouts").findOneAndUpdate(
+		await req.db.collection("workouts").findOneAndUpdate(
 			{ _id: new ObjectId(id) },
 			{
 				$set: {
@@ -90,7 +86,7 @@ const deleteWorkout = async (req, res) => {
 	const id = req.params.id;
 	const usernameInput = req.username;
 	try {
-		const workoutToDelete = await db
+		const workoutToDelete = await req.db
 			.collection("workouts")
 			.findOne({ _id: new ObjectId(id) });
 		if (!workoutToDelete) {
@@ -98,12 +94,12 @@ const deleteWorkout = async (req, res) => {
 				message: `Workout with ID ${id} not found.`,
 			});
 		}
-		if (usernameInput === "admin" && taskToDelete.maker !== "admin") {
+		if (usernameInput === "admin" && workoutToDelete.maker !== "admin") {
 			return res.status(403).json({
-				message: "Admin can only delete tasks made by admins.",
+				message: "Admin can only delete workouts made by admins.",
 			});
 		}
-		await db.collection("workouts").deleteOne({ _id: new ObjectId(id) });
+		await req.db.collection("workouts").deleteOne({ _id: new ObjectId(id) });
 		res.status(200).json({
 			message: `Workout with ID ${id} has been deleted successfully.`,
 		});
