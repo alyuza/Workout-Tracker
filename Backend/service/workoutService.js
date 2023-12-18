@@ -29,6 +29,11 @@ const createRunning = async (req, res) => {
 		const calorieCostPerKm = 70;
 		const activityType = "running";
 		const calories = (calorieCostPerKm * distance * time) / 60;
+
+		// const Int = parseInt(weight, 10);
+		// const heightInt = parseInt(height, 10);
+		// const ageInt = parseInt(age, 10);
+
 		const newWorkout = await req.db.collection("workouts").insertOne({
 			title,
 			description,
