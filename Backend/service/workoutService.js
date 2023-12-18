@@ -52,7 +52,6 @@ const createWorkout = async (req, res) => {
 const updateWorkout = async (req, res) => {
 	const id = req.params.id;
 	const { title, description, distance, time, calorie } = req.body;
-	const usernameInput = req.username;
 	try {
 		const workout = await req.db
 			.collection("workouts")
