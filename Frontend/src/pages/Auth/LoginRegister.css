@@ -1,4 +1,4 @@
-.login-text:hover {
+.auth-text:hover {
   text-decoration: underline;
   color: #ac0b41;
   cursor: pointer;
@@ -11,3 +11,18 @@
   overflow: hidden;
 }
 
+@keyframes slideIn {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.auth-animation {
+  animation: slideIn 0.5s ease-out;
+}
