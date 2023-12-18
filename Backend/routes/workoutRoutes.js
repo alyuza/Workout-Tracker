@@ -4,13 +4,18 @@ const {
 	createWorkout,
 	updateWorkout,
 	deleteWorkout,
+	createRunning,
+	createCycling,
+	createSwimming,
 } = require("../service/workoutService");
 const authenticationMiddleware = require("../middleware/authentication-middleware");
 
 const workoutRouter = Router();
 
 workoutRouter.get("/tasks", authenticationMiddleware, getWorkout);
-workoutRouter.post("/tasks", authenticationMiddleware, createWorkout);
+workoutRouter.post("/tasks/running", authenticationMiddleware, createRunning);
+workoutRouter.post("/tasks/cycling", authenticationMiddleware, createCycling);
+workoutRouter.post("/tasks/swimming", authenticationMiddleware, createSwimming);
 workoutRouter.put("/tasks/:id", authenticationMiddleware, updateWorkout);
 workoutRouter.delete("/tasks/:id", authenticationMiddleware, deleteWorkout);
 

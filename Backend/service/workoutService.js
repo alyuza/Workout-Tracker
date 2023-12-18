@@ -22,12 +22,44 @@ const getWorkout = async (req, res) => {
 	}
 };
 
-const createWorkout = async (req, res) => {
+const createRunning = async (req, res) => {
 	const usernameInput = req.username;
 	try {
 		const { title, description, distance, time } = req.body;
 		const calorieCostPerKm = 70;
 		const activityType = "running";
+		const calories = (calorieCostPerKm * distance * time) / 60;
+
+		// const Int = parseInt(weight, 10);
+		// const heightInt = parseInt(height, 10);
+		// const ageInt = parseInt(age, 10);
+
+		const newWorkout = await req.db.collection("workouts").insertOne({
+			title,
+			description,
+			distance,
+			activityType,
+			time,
+			calorie: calories,
+			maker: usernameInput,
+		});
+
+		res.status(200).json({
+			ID: newWorkout.insertedId,
+			message: `Add Running Success.`,
+			data: newWorkout,
+		});
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
+};
+
+const createCycling = async (req, res) => {
+	const usernameInput = req.username;
+	try {
+		const { title, description, distance, time } = req.body;
+		const calorieCostPerKm = 50;
+		const activityType = "cycling";
 		const calories = (calorieCostPerKm * distance * time) / 60;
 		const newWorkout = await req.db.collection("workouts").insertOne({
 			title,
@@ -41,7 +73,34 @@ const createWorkout = async (req, res) => {
 
 		res.status(200).json({
 			ID: newWorkout.insertedId,
-			message: `Add Workout Success.`,
+			message: `Add Cycling Success.`,
+			data: newWorkout,
+		});
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
+};
+
+const createSwimming = async (req, res) => {
+	const usernameInput = req.username;
+	try {
+		const { title, description, distance, time } = req.body;
+		const calorieCostPerKm = 80;
+		const activityType = "swimming";
+		const calories = (calorieCostPerKm * distance * time) / 60;
+		const newWorkout = await req.db.collection("workouts").insertOne({
+			title,
+			description,
+			distance,
+			activityType,
+			time,
+			calorie: calories,
+			maker: usernameInput,
+		});
+
+		res.status(200).json({
+			ID: newWorkout.insertedId,
+			message: `Add Swimming Success.`,
 			data: newWorkout,
 		});
 	} catch (error) {
@@ -109,7 +168,9 @@ const deleteWorkout = async (req, res) => {
 
 module.exports = {
 	getWorkout,
-	createWorkout,
+	createRunning,
+	createCycling,
+	createSwimming,
 	updateWorkout,
 	deleteWorkout,
 };

@@ -11,6 +11,7 @@ const userRouter = require("./routes/userRoutes");
 const workoutRouter = require("./routes/workoutRoutes");
 const dbConnection = require("./config/dbconfig");
 const { applyHelmet } = require("./middleware/helmet");
+const bmiCalculatorRouter = require("./routes/bmiCalculatorRoutes");
 
 const app = express();
 dbConnection();
@@ -26,5 +27,6 @@ app.get("/", (req, res) => {
 
 app.use("/api", userRouter);
 app.use("/api", authMiddleware, workoutRouter);
+app.use("/api", authMiddleware, bmiCalculatorRouter);
 
 app.listen(3000, () => console.log("Server is running on port 3000"));
