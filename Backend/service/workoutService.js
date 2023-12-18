@@ -54,7 +54,7 @@ const createCycling = async (req, res) => {
 	try {
 		const { title, description, distance, time } = req.body;
 		const calorieCostPerKm = 50;
-		const activityType = "running";
+		const activityType = "cycling";
 		const calories = (calorieCostPerKm * distance * time) / 60;
 		const newWorkout = await req.db.collection("workouts").insertOne({
 			title,
@@ -81,7 +81,7 @@ const createSwimming = async (req, res) => {
 	try {
 		const { title, description, distance, time } = req.body;
 		const calorieCostPerKm = 80;
-		const activityType = "running";
+		const activityType = "swimming";
 		const calories = (calorieCostPerKm * distance * time) / 60;
 		const newWorkout = await req.db.collection("workouts").insertOne({
 			title,
