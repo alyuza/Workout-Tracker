@@ -22,6 +22,7 @@ const getWorkout = async (req, res) => {
 	}
 };
 
+// ADD ACTIVITY
 const createRunning = async (req, res) => {
 	const usernameInput = req.username;
 	try {
@@ -29,11 +30,6 @@ const createRunning = async (req, res) => {
 		const calorieCostPerKm = 70;
 		const activityType = "running";
 		const calories = (calorieCostPerKm * distance * time) / 60;
-
-		// const Int = parseInt(weight, 10);
-		// const heightInt = parseInt(height, 10);
-		// const ageInt = parseInt(age, 10);
-
 		const newWorkout = await req.db.collection("workouts").insertOne({
 			title,
 			description,
@@ -110,16 +106,28 @@ const createSwimming = async (req, res) => {
 
 const updateWorkout = async (req, res) => {
 	const id = req.params.id;
-	const { title, description, distance, time, calorie } = req.body;
 	try {
+		const { title, description, distance, time } = req.body;
 		const workout = await req.db
 			.collection("workouts")
 			.findOne({ _id: new ObjectId(id) });
+
 		if (!workout) {
 			return res.status(400).json({
 				message: `Workout with ID ${id} not found.`,
 			});
 		}
+		// Get activityType from the database
+		const activityType = workout.activityType;
+		let calorieCostPerKm;
+		if (activityType === 'running') {
+			calorieCostPerKm = 70;
+		} else if (activityType === 'cycling') {
+			calorieCostPerKm = 50;
+		} else if (activityType === 'swimming') {
+			calorieCostPerKm = 80;
+		}
+		const calories = (calorieCostPerKm * distance * time) / 60;
 		await req.db.collection("workouts").findOneAndUpdate(
 			{ _id: new ObjectId(id) },
 			{
@@ -128,10 +136,11 @@ const updateWorkout = async (req, res) => {
 					description,
 					distance,
 					time,
-					calorie,
+					calorie: calories,
 				},
 			}
 		);
+		console.log(calorieCostPerKm);
 		res.status(200).json({
 			message: "Successfully Update Workout",
 		});
@@ -139,6 +148,9 @@ const updateWorkout = async (req, res) => {
 		res.status(400).json({ error: error.message });
 	}
 };
+
+
+
 
 const deleteWorkout = async (req, res) => {
 	const id = req.params.id;
