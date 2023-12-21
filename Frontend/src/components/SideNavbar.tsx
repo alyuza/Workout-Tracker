@@ -26,7 +26,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 import './SideNavbar.css';
-import logo from '../../image/versto.png';
+import logo from '../pages/image/versto.png';
 import ModalProfile from './ModalProfile';
 
 const SideNav: React.FC = () => {
