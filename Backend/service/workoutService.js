@@ -38,7 +38,7 @@ const createRunning = async (req, res) => {
 			activityType,
 			time,
 			calorie: calories,
-			date,
+			// date,
 			maker: usernameInput,
 		});
 
@@ -69,7 +69,7 @@ const createCycling = async (req, res) => {
 			distance,
 			activityType,
 			time,
-			date,
+			// date,
 			calorie: calories,
 			maker: usernameInput,
 		});
@@ -97,7 +97,7 @@ const createSwimming = async (req, res) => {
 			distance,
 			activityType,
 			time,
-			date,
+			// date,
 			calorie: calories,
 			maker: usernameInput,
 		});
@@ -146,7 +146,7 @@ const updateWorkout = async (req, res) => {
 					description,
 					distance,
 					time,
-					date,
+					// date,
 					calorie: calories,
 				},
 			}
