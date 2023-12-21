@@ -1,8 +1,7 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Login, Register } from './pages/Auth'
-import BMIForm from './pages/Main/BMI'
-import { CyclingDashboard, RunningDashboard, SwimmingDashboard } from './pages/Main'
+import { BmiCalculator, CyclingDashboard, RunningDashboard, SwimmingDashboard, Tips } from './pages/Main'
 
 
 function App() {
@@ -15,7 +14,8 @@ function App() {
           <Route path='/running' element={<  RunningDashboard />} />
           <Route path='/cycling' element={< CyclingDashboard />} />
           <Route path='/swimming' element={< SwimmingDashboard />} />
-          <Route path='/bmi' element={< BMIForm />} />
+          <Route path='/bmi-calculator' element={< BmiCalculator />} />
+          <Route path='/nutrition-tips' element={< Tips />} />
         </Routes>
       </Router>
     </>
