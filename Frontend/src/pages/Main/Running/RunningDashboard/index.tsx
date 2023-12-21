@@ -29,6 +29,7 @@ interface Activity {
   time: number;
   calorie: number;
   activityType: string;
+  date: string;
 }
 
 const RunningDashboard: React.FC = () => {
@@ -50,12 +51,14 @@ const RunningDashboard: React.FC = () => {
     description: '',
     distance: 0,
     time: 0,
+    date: ''
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({
     title: '',
     description: '',
     distance: '',
     time: '',
+    date: ''
   });
 
   useEffect(() => {
@@ -130,7 +133,7 @@ const RunningDashboard: React.FC = () => {
         });
         fetchData();
         setEditModalOpen(false);
-        setFormData({ title: '', description: '', distance: 0, time: 0 });
+        setFormData({ title: '', description: '', distance: 0, time: 0, date: '' });
         setFormErrors({ title: '', description: '', distance: '', time: '' });
         setSelectedActivity(null);
         Swal.fire('Workout has been updated!');
@@ -162,7 +165,7 @@ const RunningDashboard: React.FC = () => {
         });
         fetchData();
         setModalOpen(false);
-        setFormData({ title: '', description: '', distance: 0, time: 0 });
+        setFormData({ title: '', description: '', distance: 0, time: 0, date: '' });
         setFormErrors({ title: '', description: '', distance: '', time: '' });
         Swal.fire('Successfully added activity!');
       } catch (error) {
@@ -184,7 +187,7 @@ const RunningDashboard: React.FC = () => {
     <>
       <SideNav />
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <Paper
+        <Paper className={'paperDashboard'}
           sx={{
             borderRadius: '20px',
             backgroundColor: 'white',
@@ -253,6 +256,9 @@ const RunningDashboard: React.FC = () => {
                       <Typography variant="body1" gutterBottom>
                         Calorie Burn: {activity.calorie.toFixed(1)} cal
                       </Typography>
+                      <Typography variant="body1" gutterBottom>
+                        Date: {activity.date}
+                      </Typography>
                       <Button variant="outlined" onClick={() => handleEdit(activity)} sx={{ mr: 1 }}>
                         Edit
                       </Button>
@@ -280,6 +286,7 @@ const RunningDashboard: React.FC = () => {
             onRowsPerPageChange={() => { }}
           />
 
+          {/*Add Modal*/}
           <Dialog open={isModalOpen} onClose={handleCloseModal}>
             <DialogTitle>Add Activity</DialogTitle>
             <DialogContent>
@@ -296,7 +303,9 @@ const RunningDashboard: React.FC = () => {
               <TextField
                 label="Description"
                 value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
                 fullWidth
                 margin="normal"
                 required
@@ -307,7 +316,9 @@ const RunningDashboard: React.FC = () => {
                 label="Distance (km)"
                 type="number"
                 value={formData.distance}
-                onChange={(e) => setFormData({ ...formData, distance: Number(e.target.value) })}
+                onChange={(e) =>
+                  setFormData({ ...formData, distance: Number(e.target.value) })
+                }
                 fullWidth
                 margin="normal"
                 required
@@ -318,17 +329,35 @@ const RunningDashboard: React.FC = () => {
                 label="Time (minutes)"
                 type="number"
                 value={formData.time}
-                onChange={(e) => setFormData({ ...formData, time: Number(e.target.value) })}
+                onChange={(e) =>
+                  setFormData({ ...formData, time: Number(e.target.value) })
+                }
                 fullWidth
                 margin="normal"
                 required
                 error={!!formErrors.time}
                 helperText={formErrors.time}
               />
+              <TextField
+                label="Date"
+                type="date"
+                value={formData.date}
+                onChange={(e) =>
+                  setFormData({ ...formData, date: e.target.value })
+                }
+                fullWidth
+                margin="normal"
+                required
+                error={!!formErrors.date}
+                helperText={formErrors.date}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
             </DialogContent>
             <DialogActions>
               <Button onClick={handleCloseModal}>Cancel</Button>
-              <Button onClick={handleSubmit}>Save</Button>
+              <Button onClick={handleSubmit}>Done</Button>
             </DialogActions>
           </Dialog>
 
@@ -377,10 +406,24 @@ const RunningDashboard: React.FC = () => {
                 error={!!formErrors.time}
                 helperText={formErrors.time}
               />
+              <TextField
+                label="Date"
+                type="date"
+                value={formData.date}
+                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                fullWidth
+                margin="normal"
+                required
+                error={!!formErrors.date}
+                helperText={formErrors.date}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
             </DialogContent>
             <DialogActions>
               <Button onClick={handleEditModalClose}>Cancel</Button>
-              <Button onClick={handleEditSubmit}>Save</Button>
+              <Button onClick={handleEditSubmit}>Done</Button>
             </DialogActions>
           </Dialog>
         </Paper>
