@@ -5,7 +5,7 @@
 }
 
 .boxBackground {
-  background-image: url("../../../../image/auth/login-register-bg.jpg");
+  background-image: url("../../pages/image/login-register-bg.jpg");
   background-size: cover;
   position: relative;
   overflow: hidden;
