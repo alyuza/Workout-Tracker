@@ -71,32 +71,21 @@ const bmiCalculator = async (req, res) => {
   }
 };
 
-
 const deleteBmiCalculator = async (req, res) => {
-	const id = req.params.id;
-	const usernameInput = req.username;
-	try {
-		const calculatorToDelete = await req.db
-			.collection("calculator")
-			.findOne({ _id: new ObjectId(id) });
-		if (!calculatorToDelete) {
-			return res.status(400).json({
-				message: `Workout with ID ${id} not found.`,
-			});
-		}
-		if (usernameInput === "user" && calculatorToDelete.maker !== "user") {
-			return res.status(403).json({
-				message: "User can't Delete",
-			});
-		}
-		await req.db.collection("calculator").deleteOne({ _id: new ObjectId(id) });
-		res.status(200).json({
-			message: `BMI with ID ${id} has been deleted successfully.`,
-		});
-	} catch (error) {
-		res.status(400).json({ error: error.message });
-	}
+  const usernameInput = req.username;
+  try {
+    const deletionConditions = {
+      $or: [{ maker: usernameInput }],
+    };
+    const deletionResult = await req.db.collection("calculator").deleteMany(deletionConditions);
+    res.status(200).json({
+      message: `${deletionResult.deletedCount} BMI documents have been deleted successfully.`,
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
+
 
 module.exports = {
 	bmiCalculator,
