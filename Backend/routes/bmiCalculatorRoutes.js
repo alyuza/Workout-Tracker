@@ -1,5 +1,9 @@
 const { Router } = require("express");
-const { bmiCalculator, getBmiCalculator } = require("../service/bmiCalculator");
+const {
+	bmiCalculator,
+	getBmiCalculator,
+	deleteBmiCalculator,
+} = require("../service/bmiCalculator");
 const authenticationMiddleware = require("../middleware/authentication-middleware");
 
 const bmiCalculatorRouter = Router();
@@ -15,9 +19,9 @@ bmiCalculatorRouter.post(
 	bmiCalculator
 );
 bmiCalculatorRouter.delete(
-	"bmicalculator/:id",
+	"/bmicalculator/:id",
 	authenticationMiddleware,
-	bmiCalculator
+	deleteBmiCalculator
 );
 
 module.exports = bmiCalculatorRouter;

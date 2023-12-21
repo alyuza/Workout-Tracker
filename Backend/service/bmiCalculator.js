@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongodb");
+
 const getBmiCalculator = async (req, res) => {
 	const usernameInput = req.username;
 	const roleInput = req.role;
@@ -81,7 +83,7 @@ const deleteBmiCalculator = async (req, res) => {
 		}
 		if (usernameInput === "user" && calculatorToDelete.maker !== "user") {
 			return res.status(403).json({
-				message: "Admin can only delete workouts made by admins.",
+				message: "User can't Delete",
 			});
 		}
 		await req.db.collection("calculator").deleteOne({ _id: new ObjectId(id) });
