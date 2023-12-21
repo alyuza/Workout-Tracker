@@ -1,5 +1,28 @@
+const getBmiCalculator = async (req, res) => {
+	const usernameInput = req.username;
+	const roleInput = req.role;
+	try {
+		let workoutlist;
+		if (roleInput === "user") {
+			workoutlist = await req.db
+				.collection("calculator")
+				.find({ maker: usernameInput })
+				.toArray();
+		} else {
+			workoutlist = await req.db.collection("calculator").find().toArray();
+		}
+		res.status(200).json({
+			message: "Success Read All BMI List",
+			data: workoutlist,
+		});
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
+};
+
 const bmiCalculator = async (req, res) => {
 	try {
+		const usernameInput = req.username;
 		const { weight, height, age } = req.body;
 
 		if (!weight || !height || !age) {
@@ -30,7 +53,8 @@ const bmiCalculator = async (req, res) => {
 			age: ageInt,
 			bmi,
 			category,
-			timestamp: new Date(),
+			date: new Date(),
+			maker: usernameInput,
 		});
 
 		res.status(200).json({
@@ -45,4 +69,5 @@ const bmiCalculator = async (req, res) => {
 
 module.exports = {
 	bmiCalculator,
+	getBmiCalculator,
 };
