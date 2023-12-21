@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Card, TextField, Button, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import API from '../../../utils/API';
-import { Box, Card, TextField, Button, Typography } from '@mui/material';
 import Swal from 'sweetalert2'
-import './style.css';
+import { API } from '../../../utils/API';
+import '../LoginRegister.css';
 
 interface LoginInterface {
   username: string;
@@ -23,8 +23,12 @@ const validationSchema = yup.object({
 });
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
+  const navigate = useNavigate();
   const handleSubmit = async (values: LoginInterface) => {
     const body = {
       username: values.username,
@@ -46,7 +50,7 @@ const Login: React.FC = () => {
 
       const data = await response.json();
       localStorage.setItem('token', data.data);
-      navigate('/dashboard');
+      navigate('/running');
       Swal.fire("Login Success!");
     } catch (error) {
       console.error(error);
@@ -62,14 +66,14 @@ const Login: React.FC = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <Box
+      <Box className='boxBackground'
         display="flex"
         justifyContent="center"
         alignItems="center"
         height="100vh"
         style={{ backgroundColor: '#263238' }}
       >
-        <Card
+        <Card className={`auth-animation ${isVisible ? 'visible' : ''}`}
           style={{
             padding: '20px',
             maxWidth: '350px',
@@ -83,7 +87,7 @@ const Login: React.FC = () => {
             component="div"
             style={{ textAlign: 'center', margin: '16px' }}
           >
-            Login to Workout Tracker
+            Login to Versto
           </Typography>
 
           <TextField
@@ -124,7 +128,7 @@ const Login: React.FC = () => {
           <Typography style={{ textAlign: 'center', padding: '20px' }}>
             Don't have an account?
             <a onClick={() => navigate('/register')}>
-              <strong className="register-text"> Register</strong>
+              <strong className="auth-text"> Register</strong>
             </a>
           </Typography>
         </Card>

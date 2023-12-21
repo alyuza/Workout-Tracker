@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Button, Card, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { API } from '../../../utils/API';
-import { Box, Button, Card, TextField, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
-import './style.css';
+import { API } from '../../../utils/API';
+import '../LoginRegister.css';
 
 interface RegisterInterface {
   fullName: string;
@@ -21,14 +21,29 @@ const initialValues: RegisterInterface = {
 
 const validationSchema = yup.object({
   fullName: yup.string().required('Please insert your fullname'),
-  username: yup.string().required('Please insert your username'),
-  password: yup.string().required('Please enter your password'),
+  username: yup
+    .string()
+    .required('Please insert your username')
+    .matches(/^\S*$/, 'Username cannot contain spaces'),
+  password: yup
+    .string()
+    .required('Please enter your password')
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[a-zA-Z]).{6,}$/,
+      'Password must have minimum 6 characters, at least 1 uppercase letter, and 1 numeric digit'
+    ),
 });
 
-const Register: React.FC = () => {
-  const navigate = useNavigate();
 
+const Register: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const navigate = useNavigate();
   const handleSubmit = async (values: RegisterInterface) => {
+
     const body = {
       fullname: values.fullName,
       username: values.username,
@@ -65,14 +80,13 @@ const Register: React.FC = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <Box
+      <Box className='boxBackground'
         display="flex"
         justifyContent="center"
         alignItems="center"
         height="100vh"
-        style={{ backgroundColor: '#263238' }}
       >
-        <Card
+        <Card className={`auth-animation ${isVisible ? 'visible' : ''}`}
           style={{
             padding: '20px',
             maxWidth: '350px',
@@ -133,7 +147,7 @@ const Register: React.FC = () => {
           <Typography style={{ textAlign: 'center', padding: '20px' }}>
             Already Registered?
             <a onClick={() => navigate('/')}>
-              <strong className="login-text"> Login</strong>
+              <strong className="auth-text"> Login</strong>
             </a>
           </Typography>
         </Card>

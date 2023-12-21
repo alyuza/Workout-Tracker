@@ -1,9 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const Permission = require("../model/permission");
-const Users = require("../model/user");
 const { JWT_SIGN } = require("../config/config");
-const { generaterResetToken } = require("../middleware/uid");
+// const { generaterResetToken } = require("../middleware/uid");
 
 const register = async (req, res) => {
 	const { fullname, username, password } = req.body;
@@ -26,21 +24,20 @@ const register = async (req, res) => {
 				message: "Fullname is required",
 			});
 		}
-		const user = await Users.findOne({ username: usernameValue });
+		const user = await req.db.collection("users").findOne({ username });
 		if (user) {
 			throw new Error("Username Already Exist");
 		}
 		const hashedPassword = await bcrypt.hash(password, 6);
-		const newUser = new Users({
-			fullname: fullname,
-			username: usernameValue,
+		const newUser = await req.db.collection("users").insertOne({
+			fullname,
+			username,
 			password: hashedPassword,
-			role: 'user'
+			role: "user",
 		});
-		await newUser.save();
 		res.status(200).json({
-			message: "User Successfully Registered",
-			data: newUser,
+			message: `User ${username} Successfully Registered`,
+			data: newUser.insertedID,
 		});
 	} catch (error) {
 		res.status(401).json({ error: error.message });
@@ -51,16 +48,19 @@ const login = async (req, res) => {
 	const { username, password } = req.body;
 
 	try {
-		const user = await Users.findOne({ username }).populate("role");
+		const user = await req.db.collection("users").findOne({ username });
 		console.log(user);
 		const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
 		if (user) {
 			if (isPasswordCorrect) {
-				const token = jwt.sign({ username: user.username, role: user.role }, JWT_SIGN)
+				const token = jwt.sign(
+					{ username: user.username, role: user.role },
+					JWT_SIGN
+				);
 				res.status(200).json({
-					message: 'Login Success.',
-					data: token
+					message: "Login Success.",
+					data: token,
 				});
 			} else {
 				res.status(401).json({ error: "Password is incorrect" });
@@ -76,5 +76,5 @@ const login = async (req, res) => {
 
 module.exports = {
 	register,
-	login
+	login,
 };
