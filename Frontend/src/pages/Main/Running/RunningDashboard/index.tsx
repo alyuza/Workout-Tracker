@@ -105,11 +105,19 @@ const RunningDashboard: React.FC = () => {
     }
 
     if (formData.distance <= 0) {
-      errors.distance = 'Distance must be greater than 0';
+      errors.distance = 'Distance should be more than 0';
     }
 
     if (formData.time <= 0) {
-      errors.time = 'Time must be greater than 0';
+      errors.time = 'Time should be more than 0';
+    }
+
+    // Validate date
+    const currentDate = new Date();
+    const selectedDate = new Date(formData.date);
+
+    if (isNaN(selectedDate.getTime()) || selectedDate < currentDate) {
+      errors.date = 'Invalid date. Please select a future date.';
     }
 
     setFormErrors(errors);
@@ -136,10 +144,10 @@ const RunningDashboard: React.FC = () => {
         setFormData({ title: '', description: '', distance: 0, time: 0, date: '' });
         setFormErrors({ title: '', description: '', distance: '', time: '' });
         setSelectedActivity(null);
-        Swal.fire('Workout has been updated!');
+        Swal.fire('Workout Updated!');
       } catch (error) {
         console.error(error);
-        Swal.fire('Failed to update activity!');
+        Swal.fire('Failed to Update Activity!');
       }
     }
   };
@@ -150,10 +158,10 @@ const RunningDashboard: React.FC = () => {
         headers: { Authorization: `Bearer ${validate}` },
       });
       fetchData();
-      Swal.fire('Workout has been deleted!');
+      Swal.fire('Workout Deleted!');
     } catch (error) {
       console.error(error);
-      Swal.fire('Failed to delete activity!');
+      Swal.fire('Failed to Delete Activity!');
     }
   };
 
@@ -167,7 +175,7 @@ const RunningDashboard: React.FC = () => {
         setModalOpen(false);
         setFormData({ title: '', description: '', distance: 0, time: 0, date: '' });
         setFormErrors({ title: '', description: '', distance: '', time: '' });
-        Swal.fire('Successfully added activity!');
+        Swal.fire('Activity Successfully Added!');
       } catch (error) {
         console.error(error);
         Swal.fire('Failed to add activity.');
@@ -202,13 +210,13 @@ const RunningDashboard: React.FC = () => {
               Running Activity
             </Typography>
             <Typography variant="h5" gutterBottom>
-              Total Distances: {totalDistance.toFixed(1)} km
+              Total Distances: {totalDistance.toFixed(1)} Km
             </Typography>
             <Typography variant="h5" gutterBottom>
-              Total Workout: {totalTime.toFixed(1)} minutes
+              Total Workout: {totalTime.toFixed(1)} Minutes
             </Typography>
             <Typography variant="h5" gutterBottom>
-              Total Calorie Burn: {totalCalorie.toFixed(1)} cal
+              Total Calorie Burn: {totalCalorie.toFixed(1)} Cal
             </Typography>
             <Button variant="outlined" onClick={handleOpenModal} sx={{ mt: 2 }}>
               Add Activity
