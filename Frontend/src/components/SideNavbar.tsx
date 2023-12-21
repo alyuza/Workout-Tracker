@@ -57,12 +57,11 @@ const SideNav: React.FC = () => {
 
   const handleLogout = () => {
     Swal.fire({
-      title: 'Do you really want to Logout ?',
+      title: 'Are you sure want to logout?',
       showCancelButton: true,
-      confirmButtonText: 'Logout',
+      confirmButtonText: 'Yes',
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire('Logout Success');
         localStorage.removeItem('token');
         navigate('/');
       }
