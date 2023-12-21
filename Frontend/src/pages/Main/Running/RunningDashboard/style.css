@@ -1,0 +1,43 @@
+.activityBox {
+  display: flex;
+  flex-direction: row;
+}
+.activityDescription{
+ margin-left: 40px;
+}
+.activityPadding{
+  padding: 40px 180px;
+}
+
+/* Media query for screens with a width less than 950 pixels */
+@media (max-width: 1150px) {
+  .activityBox {
+    /* Your specific styles for screens less than 950 pixels here */
+    /* For example: */
+    width: 100%; /* Make it full width */
+    flex-direction: column;
+  }
+  .activityDescription{
+    margin-left: 0;
+   }
+   .activityPadding{
+    padding: 20px 120px;
+  }
+  
+}
+
+@media (max-width: 600px) {
+  .activityBox {
+    /* Your specific styles for screens less than 950 pixels here */
+    /* For example: */
+    width: 100%; /* Make it full width */
+    flex-direction: column;
+  }
+  .activityDescription{
+    margin-left: 0;
+   }
+   .activityPadding{
+    padding: 0;
+  }
+  
+}

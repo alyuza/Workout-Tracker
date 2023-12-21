@@ -1,12 +1,11 @@
 const { Router } = require("express");
 const {
 	getWorkout,
-	createWorkout,
-	updateWorkout,
 	deleteWorkout,
 	createRunning,
 	createCycling,
 	createSwimming,
+	updateWorkout
 } = require("../service/workoutService");
 const authenticationMiddleware = require("../middleware/authentication-middleware");
 

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Button, Card, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { API } from '../../../utils/API';
-import { Box, Button, Card, TextField, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
-import './style.css';
+import { API } from '../../../utils/API';
+import '../LoginRegister.css';
 
 interface RegisterInterface {
   fullName: string;
@@ -36,9 +36,14 @@ const validationSchema = yup.object({
 
 
 const Register: React.FC = () => {
-  const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
+  const navigate = useNavigate();
   const handleSubmit = async (values: RegisterInterface) => {
+
     const body = {
       fullname: values.fullName,
       username: values.username,
@@ -81,7 +86,7 @@ const Register: React.FC = () => {
         alignItems="center"
         height="100vh"
       >
-        <Card
+        <Card className={`auth-animation ${isVisible ? 'visible' : ''}`}
           style={{
             padding: '20px',
             maxWidth: '350px',
@@ -142,7 +147,7 @@ const Register: React.FC = () => {
           <Typography style={{ textAlign: 'center', padding: '20px' }}>
             Already Registered?
             <a onClick={() => navigate('/')}>
-              <strong className="login-text"> Login</strong>
+              <strong className="auth-text"> Login</strong>
             </a>
           </Typography>
         </Card>
