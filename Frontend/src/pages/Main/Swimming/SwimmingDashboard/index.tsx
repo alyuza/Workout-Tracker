@@ -15,7 +15,7 @@ import {
 import { Box } from '@mui/system';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { API } from '../../../../utils/API';
+import { API } from '../../../utils/API';
 import Footer from '../../../../components/Footer';
 import mapsImage from '../../../image/maps.jpg';
 import Swal from 'sweetalert2';

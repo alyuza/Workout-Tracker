@@ -4,7 +4,7 @@ import { Box, Button, Card, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Swal from 'sweetalert2'
-import { API } from '../../../utils/API';
+import { API } from '../../utils/API';
 import '../LoginRegister.css';
 
 interface RegisterInterface {

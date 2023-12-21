@@ -15,9 +15,6 @@ interface ModalProfileProps {
   profileData: {
     fullName: string;
     username: string;
-    runningDistance: string;
-    cyclingDistance: string;
-    swimmingDistance: string;
   };
 }
 
@@ -42,9 +39,6 @@ const ModalProfile: React.FC<ModalProfileProps> = ({ open, onClose, profileData 
           <Divider />
           <Typography>Full Name: {profileData.fullName}</Typography>
           <Typography>Username: {profileData.username}</Typography>
-          <Typography>Running Distance: {profileData.runningDistance}</Typography>
-          <Typography>Cycling Distance: {profileData.cyclingDistance}</Typography>
-          <Typography>Swimming Distance: {profileData.swimmingDistance}</Typography>
           <Button onClick={onClose}>Close</Button>
         </Paper>
       </Slide>

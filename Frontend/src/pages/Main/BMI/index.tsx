@@ -15,7 +15,7 @@ import {
   Grid,
 } from '@mui/material';
 import axios from 'axios';
-import { API } from '../../../utils/API';
+import { API } from '../../utils/API';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Footer from '../../../components/Footer';
