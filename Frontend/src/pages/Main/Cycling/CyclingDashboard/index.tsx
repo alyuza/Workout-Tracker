@@ -105,11 +105,11 @@ const CyclingDashboard: React.FC = () => {
     }
 
     if (formData.distance <= 0) {
-      errors.distance = 'Distance must be greater than 0';
+      errors.distance = 'Distance should be more than 0';
     }
 
     if (formData.time <= 0) {
-      errors.time = 'Time must be greater than 0';
+      errors.time = 'Time should be more than 0';
     }
 
     setFormErrors(errors);
@@ -136,10 +136,10 @@ const CyclingDashboard: React.FC = () => {
         setFormData({ title: '', description: '', distance: 0, time: 0, date: '' });
         setFormErrors({ title: '', description: '', distance: '', time: '' });
         setSelectedActivity(null);
-        Swal.fire('Workout has been updated!');
+        Swal.fire('Workout Updated!');
       } catch (error) {
         console.error(error);
-        Swal.fire('Failed to update activity!');
+        Swal.fire('Failed to Update Activity!');
       }
     }
   };
@@ -150,10 +150,10 @@ const CyclingDashboard: React.FC = () => {
         headers: { Authorization: `Bearer ${validate}` },
       });
       fetchData();
-      Swal.fire('Workout has been deleted!');
+      Swal.fire('Workout Deleted!');
     } catch (error) {
       console.error(error);
-      Swal.fire('Failed to delete activity!');
+      Swal.fire('Failed to Delete Activity!');
     }
   };
 
@@ -167,10 +167,10 @@ const CyclingDashboard: React.FC = () => {
         setModalOpen(false);
         setFormData({ title: '', description: '', distance: 0, time: 0, date: '' });
         setFormErrors({ title: '', description: '', distance: '', time: '' });
-        Swal.fire('Successfully added activity!');
+        Swal.fire('Activity Successfully Added!');
       } catch (error) {
         console.error(error);
-        Swal.fire('Failed to add activity.');
+        Swal.fire('Failed to Add Activity!');
       }
     }
   };
@@ -385,7 +385,7 @@ const CyclingDashboard: React.FC = () => {
                 helperText={formErrors.description}
               />
               <TextField
-                label="Distance (km)"
+                label="Distance (Km)"
                 type="number"
                 value={formData.distance}
                 onChange={(e) => setFormData({ ...formData, distance: Number(e.target.value) })}
@@ -396,7 +396,7 @@ const CyclingDashboard: React.FC = () => {
                 helperText={formErrors.distance}
               />
               <TextField
-                label="Time (minutes)"
+                label="Time (Minutes)"
                 type="number"
                 value={formData.time}
                 onChange={(e) => setFormData({ ...formData, time: Number(e.target.value) })}
