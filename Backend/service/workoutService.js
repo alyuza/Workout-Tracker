@@ -28,19 +28,19 @@ const createRunning = async (req, res) => {
 		const { title, description, distance, time } = req.body;
 		const calorieCostPerKm = 70;
 		const activityType = "running";
-		const calories = (calorieCostPerKm * distance * time) / 60;
+		const calories = parseInt((calorieCostPerKm * distance * time) / 60);
 
-		// const Int = parseInt(weight, 10);
-		// const heightInt = parseInt(height, 10);
-		// const ageInt = parseInt(age, 10);
+		const timeInt = parseInt(time, 10);
+		const distanceInt = parseInt(distance, 10);
 
 		const newWorkout = await req.db.collection("workouts").insertOne({
 			title,
 			description,
-			distance,
+			distance: distanceInt,
 			activityType,
-			time,
+			time: timeInt,
 			calorie: calories,
+			date: new date("<YYYY-mm-dd>"),
 			maker: usernameInput,
 		});
 
@@ -60,13 +60,18 @@ const createCycling = async (req, res) => {
 		const { title, description, distance, time } = req.body;
 		const calorieCostPerKm = 50;
 		const activityType = "cycling";
-		const calories = (calorieCostPerKm * distance * time) / 60;
+		const calories = parseInt((calorieCostPerKm * distance * time) / 60);
+
+		const timeInt = parseInt(time, 10);
+		const distanceInt = parseInt(distance, 10);
+
 		const newWorkout = await req.db.collection("workouts").insertOne({
 			title,
 			description,
-			distance,
+			distance: distanceInt,
 			activityType,
-			time,
+			time: timeInt,
+			date: new date("<YYYY-mm-dd>"),
 			calorie: calories,
 			maker: usernameInput,
 		});
@@ -94,6 +99,7 @@ const createSwimming = async (req, res) => {
 			distance,
 			activityType,
 			time,
+			date: new date("<YYYY-mm-dd>"),
 			calorie: calories,
 			maker: usernameInput,
 		});
@@ -110,7 +116,7 @@ const createSwimming = async (req, res) => {
 
 const updateWorkout = async (req, res) => {
 	const id = req.params.id;
-	const { title, description, distance, time, calorie } = req.body;
+	const { title, description, distance, time, calorie, date } = req.body;
 	const usernameInput = req.username;
 	try {
 		const workout = await req.db
@@ -130,6 +136,7 @@ const updateWorkout = async (req, res) => {
 					distance,
 					time,
 					calorie,
+					date,
 				},
 			}
 		);
