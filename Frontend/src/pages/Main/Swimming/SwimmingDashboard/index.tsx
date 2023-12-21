@@ -105,11 +105,11 @@ const SwimmingDashboard: React.FC = () => {
     }
 
     if (formData.distance <= 0) {
-      errors.distance = 'Distance must be greater than 0';
+      errors.distance = 'Distance should be more than 0';
     }
 
     if (formData.time <= 0) {
-      errors.time = 'Time must be greater than 0';
+      errors.time = 'Time should be more than 0';
     }
 
     setFormErrors(errors);
