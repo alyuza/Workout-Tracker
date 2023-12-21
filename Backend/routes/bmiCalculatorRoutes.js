@@ -14,5 +14,10 @@ bmiCalculatorRouter.post(
 	authenticationMiddleware,
 	bmiCalculator
 );
+bmiCalculator.delete(
+	"bmicalculator/:id",
+	authenticationMiddleware,
+	bmiCalculator
+);
 
 module.exports = bmiCalculatorRouter;
