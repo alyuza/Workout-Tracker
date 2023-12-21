@@ -147,7 +147,7 @@ const updateWorkout = async (req, res) => {
 					distance,
 					time,
 					date,
-					calorie,
+					calories,
 				},
 			}
 		);
