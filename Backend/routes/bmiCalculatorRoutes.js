@@ -19,7 +19,7 @@ bmiCalculatorRouter.post(
 	bmiCalculator
 );
 bmiCalculatorRouter.delete(
-	"/bmicalculator/:id",
+	"/bmicalculator",
 	authenticationMiddleware,
 	deleteBmiCalculator
 );
