@@ -52,7 +52,7 @@ Before we started the whole project, we do planning, strategizing and make it in
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/fitness-tracker.git
+   git clone https://github.com/alyuza/Workout-Tracker
 2. Navigate to the frontend directory:
    ```cd workout-tracker/frontend```
 3. Install dependencies:
