@@ -34,13 +34,6 @@ const SideNav: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [profileData] = useState({
-    fullName: 'Alyuza Satrio Prayogo',
-    username: 'alyuza',
-    runningDistance: '10 km',
-    cyclingDistance: '20 km',
-    swimmingDistance: '500 m',
-  });
 
   const handleOpenProfile = () => {
     console.log('Fetching or updating profile data...');
@@ -184,7 +177,7 @@ const SideNav: React.FC = () => {
         {drawer}
       </Drawer>
 
-      <ModalProfile open={profileOpen} onClose={handleCloseProfile} profileData={profileData} />
+      <ModalProfile open={profileOpen} onClose={handleCloseProfile} />
     </>
   );
 };

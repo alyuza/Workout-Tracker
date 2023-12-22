@@ -113,6 +113,21 @@ const BmiCalculator: React.FC = () => {
     setPage(newPage);
   };
 
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'Underweight':
+        return 'blue';
+      case 'Normal weight':
+        return 'green';
+      case 'Overweight':
+        return 'orange';
+      case 'Obese':
+        return 'red';
+      default:
+        return 'black'; // Default color if category is not recognized
+    }
+  };
+
   return (
     <>
       <SideNav />
@@ -161,7 +176,7 @@ const BmiCalculator: React.FC = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Date</TableCell>
+                      <TableCell style={{ minWidth: '80px' }}>Date</TableCell>
                       <TableCell>Weight (Kg)</TableCell>
                       <TableCell>Height (Cm)</TableCell>
                       <TableCell>BMI</TableCell>
@@ -177,7 +192,7 @@ const BmiCalculator: React.FC = () => {
                           <TableCell>{entry.weight}</TableCell>
                           <TableCell>{entry.height}</TableCell>
                           <TableCell>{entry.bmi.toFixed(1)}</TableCell>
-                          <TableCell>{entry.category}</TableCell>
+                          <TableCell style={{ color: getCategoryColor(entry.category) }}>{entry.category}</TableCell>
                         </TableRow>
                       ))}
                   </TableBody>

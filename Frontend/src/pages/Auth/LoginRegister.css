@@ -11,6 +11,10 @@
   overflow: hidden;
 }
 
+.verstoLogo{
+  margin-bottom: 50px;
+}
+
 @keyframes slideIn {
   0% {
     transform: translateY(100%);

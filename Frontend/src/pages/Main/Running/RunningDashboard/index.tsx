@@ -113,11 +113,10 @@ const RunningDashboard: React.FC = () => {
     }
 
     // Validate date
-    const currentDate = new Date();
     const selectedDate = new Date(formData.date);
 
-    if (isNaN(selectedDate.getTime()) || selectedDate < currentDate) {
-      errors.date = 'Invalid date. Please select a future date.';
+    if (isNaN(selectedDate.getTime())) {
+      errors.date = 'Date is required';
     }
 
     setFormErrors(errors);

@@ -112,6 +112,14 @@ const SwimmingDashboard: React.FC = () => {
       errors.time = 'Time should be more than 0';
     }
 
+     // Validate date
+     const selectedDate = new Date(formData.date);
+
+     if (isNaN(selectedDate.getTime())) {
+       errors.date = 'Date is required';
+     }
+ 
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
