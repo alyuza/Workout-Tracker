@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 
 const authMiddleware = require("./middleware/authentication-middleware");
 const databaseMiddleware = require("./middleware/database-middleware");
-const { corsOptions } = require("./middleware/cors");
+// const { corsOptions } = require("./middleware/cors");
 const userRouter = require("./routes/userRoutes");
 const workoutRouter = require("./routes/workoutRoutes");
 const dbConnection = require("./config/dbconfig");
@@ -15,7 +15,7 @@ const bmiCalculatorRouter = require("./routes/bmiCalculatorRoutes");
 
 const app = express();
 dbConnection();
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 applyHelmet(app);
 app.use(cookieParser());
 app.use(bodyParser.json());
