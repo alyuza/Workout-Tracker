@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import Swal from 'sweetalert2'
 import { API } from '../../utils/API';
 import '../LoginRegister.css';
+import logo from '../../image/versto.png'
 
 interface RegisterInterface {
   fullName: string;
@@ -20,11 +21,22 @@ const initialValues: RegisterInterface = {
 };
 
 const validationSchema = yup.object({
-  fullName: yup.string().required('Please insert your fullname'),
+  fullName: yup
+    .string()
+    .required('Please insert your fullname')
+    .matches(/^[a-zA-Z\s]+$/, 'Fullname can only contain letters and spaces')
+    .test('hasNoNumbersOrSpecialChars', 'Fullname cannot contain numbers or special characters', function (value) {
+      return !/[0-9~!@#$%^&*()_+={}[\]:;<>,.?\\/-]/.test(value);
+    }),
   username: yup
     .string()
     .required('Please insert your username')
-    .matches(/^\S*$/, 'Username cannot contain spaces'),
+    .matches(/^[a-z0-9]+$/, 'Username can only contain lowercase letters and numbers')
+    .min(3, 'Username must be at least 3 characters long')
+    .max(30, 'Username cannot be longer than 30 characters')
+    .test('isLowercase', 'Username must be in lowercase', function (value) {
+      return value === value.toLowerCase();
+    }),
   password: yup
     .string()
     .required('Please enter your password')
@@ -66,6 +78,7 @@ const Register: React.FC = () => {
       const data = await response.json();
       console.log('Success register:', data);
       Swal.fire("Register Success!");
+      navigate('/')
     } catch (error) {
       console.error(error);
       Swal.fire("Register Failed!");
@@ -82,10 +95,16 @@ const Register: React.FC = () => {
     <form onSubmit={formik.handleSubmit}>
       <Box className='boxBackground'
         display="flex"
+        flexDirection={'column'}
         justifyContent="center"
         alignItems="center"
         height="100vh"
       >
+        <Box className={'verstoLogo'}>
+          <a href="#">
+            <img src={logo} alt="Logo" style={{ width: '200px', height: '60px' }} />
+          </a>
+        </Box>
         <Card className={`auth-animation ${isVisible ? 'visible' : ''}`}
           style={{
             padding: '20px',

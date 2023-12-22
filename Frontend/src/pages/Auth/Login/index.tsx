@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import Swal from 'sweetalert2'
 import { API } from '../../utils/API';
 import '../LoginRegister.css';
+import logo from '../../image/versto.png';
 
 interface LoginInterface {
   username: string;
@@ -68,11 +69,17 @@ const Login: React.FC = () => {
     <form onSubmit={formik.handleSubmit}>
       <Box className='boxBackground'
         display="flex"
+        flexDirection={'column'}
         justifyContent="center"
         alignItems="center"
         height="100vh"
         style={{ backgroundColor: '#263238' }}
       >
+        <Box className={'verstoLogo'}>
+          <a href="#">
+            <img src={logo} alt="Logo" style={{ width: '200px', height: '60px' }} />
+          </a>
+        </Box>
         <Card className={`auth-animation ${isVisible ? 'visible' : ''}`}
           style={{
             padding: '20px',
@@ -87,7 +94,7 @@ const Login: React.FC = () => {
             component="div"
             style={{ textAlign: 'center', margin: '16px' }}
           >
-            Login to Versto
+            Login to Website
           </Typography>
 
           <TextField
