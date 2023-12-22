@@ -1,46 +1,56 @@
-# VERSTO APP
+# Versto Workout Tracker Application
 
-A fitness tracker app that helps users monitor their workouts, calculate BMI, and provides nutrition tips. Built with Material-UI, React with TypeScript for the frontend, and Express.js with Node.js for the backend. This app is developed by Alyuza Satrio & Ireng Febrian Sanjaya. This idea came to us after we figured out we have the same interest in working out. So here it goes, our Versto App.
+Introducing Versto App, a cutting-edge fitness tracker designed to revolutionize your workout experience. Developed by the dynamic duo of fitness enthusiasts, Alyuza Satrio Prayogo and Ireng Febrian Sanjaya, this state-of-the-art application goes beyond the ordinary, offering a comprehensive set of features to elevate your fitness journey.
+
+Versto is not just a fitness tracker; it's your ultimate companion on the path to a healthier lifestyle. With an intuitive interface crafted using Material-UI and powered by React with TypeScript, our frontend ensures a seamless and user-friendly experience. The backend, robustly supported by Express.js and Node.js, guarantees efficient performance and data handling.
+
+Embark on your fitness journey with Versto and experience a new paradigm in workout tracking. Whether you're sculpting your physique, aiming for peak performance, or simply prioritizing your well-being, Versto is your ally every step of the way. Join us in reshaping the future of fitness – welcome to Versto, where your journey to a healthier you begins.
+
+<img src="Readme%20Documentation/verstored.png" width="300px">
 
 ## Table of Contents
 
-- [VERSTO APP](#versto-app)
-
   - [Table of Contents](#table-of-contents)
 
-  - [FLOW CHART](#flow-chart)
+  - [Acknowledgements](#acknowledgements)
+
+  - [Flow Chart](#flow-chart)
 
   - [Features](#features)
 
   - [Installation](#installation)
 
-    - [Frontend (React with TypeScript)](#frontend-react-with-typescript)
-
-    - [Backend (Express.js with Node.js)](#backend-expressjs-with-nodejs)
-
-  - [Usage](#usage)
-
   - [API Documentation](#api-documentation)
 
-    - [User Endpoint](#user-endpoint)
+  - [Deploymennt Link](#deployment-link)
 
-    - [Workout Endpoint](#workout-endpoint)
+  - [Details](#details)
 
-    - [BMI Calculator Endpoint](#bmi-calculator-endpoint)
+  - [Contact Person](#contact-person)
 
-  - [BMI Calculator](#bmi-calculator)
+## Acknowledgements
 
-  - [Nutrition Tips](#nutrition-tips)
+- React
 
-  - [Acknowledgements](#acknowledgements)
+- Vite
 
-  - [Access Link](#access-link)
+- Express.js
 
-## FLOW CHART
+- Node.js
+
+- Postman
+
+- Mongodb
+
+- Vercel
+
+- Material-UI
+
+## Flow Chart
 
 Before we started the whole project, we do planning, strategizing and make it into a flow chart to make sure that our idea is on track. Here is the flow chart picture;
-<img src="Readme%20Documentation/Workout_Tracker_-_Final_Project.drawio.png" width="1000">
 
+<img src="Readme%20Documentation/Workout_Tracker_-_Final_Project.drawio.png" width="1000px">
 
 ## Features
 
@@ -59,18 +69,10 @@ Before we started the whole project, we do planning, strategizing and make it in
 - **Nutrition Tips:**
 
   - Access helpful nutrition tips and advice to support your fitness goals.
-
-- **Material-UI Design:**
-
-  - Stylish and responsive user interface using Material-UI components.
-
-- **Postman Documentation:**
-
-  - Documentation for Backend Endpoint with request & response body json.
   
 ## Installation
 
-### Frontend (React with TypeScript)
+### Frontend (React - TypeScript)
 
 1. Clone the repository:
 
@@ -144,56 +146,53 @@ On this app, you can use BMI Calculator by input the weight, height and age box 
 | **Overweight**              |  < 29.9       |
 | **Obese**                   |  > 29.9       |
 
-## Acknowledgements
-
-- Material-UI
-
-- React
-
-- Express.js
-
-- Node.js
-
-- Postman
-
-- Mongodb
-
-- Vercel
-
-- Swal Alert
-
-## Access Link
+## Deployment Link
 
 You access Frontend and Backend with link below;
 Frontend: [https://www.versto.site](https://www.versto.site)
 Backend: [https://workout-tracker-server-navy.vercel.app](https://workout-tracker-server-navy.vercel.app)
 
-## Usage
+## Details
 
 Versto App is a user friendly app for all age, gender and race. We're providing a simple page for user from register, login, workout tracking (running, cycling, swimming), bmi calculator and nutrition tips. Here's below for more detail;
 
-<img src="Readme%20Documentation/Register%20Page.png" width="650">
+### Login 
+
+The very first page of Versto App that will appear is Login Page. The purpose of this page is to authenticate user and keep their personal information safe.
 
 <img src="Readme%20Documentation/Login%20Page.png" width="650">
 
+### Workout Dashboard 
+
+The next page after doing login is the dashboard page. This page is consist of running, cycling, swimming, BMI Calculator and Nutrition & Tips. All activity is shown on this page.
+
 <img src="Readme%20Documentation/Running%20Activity.png" width="650">
 
-<img src="Readme%20Documentation/Add%20Activity.png" width="650">
+### Add Workout Activity 
 
-<img src="Readme%20Documentation/Menu.png" width="650" height="800">
+User is allowed to add activity, all blank box must be filled such as title, description, distance, time, and date. The purpose of this specific request is to give user a tracking of their workout and also to remind the user what are they doing, what is happening at the moment they're doing the workout. To give a picture of the workout moment. 
 
-<img src="Readme%20Documentation/Cycling.png" width="650">
+<img src="Readme%20Documentation/Add%20Activity.png" width="400px">
 
-<img src="Readme%20Documentation/Swimming%20Activity.png" width="650">
+### Menu 
+
+This menu page on Side Navigation Bar is consist of running, cycling, swimming, BMI Calculator, Nutrition and Tips and Help and Support. This will be easily to lead user to each page.
+
+<img src="Readme%20Documentation/Menu.png" width="400">
+
+### BMI Calculator 
+
+BMI Calculator is a feature that Versto App develop for user to calculate the Body Measurement Index. The purpose of this app is to give awareness to user about healthy weight range or if they may underweight, overweight or obese.
 
 <img src="Readme%20Documentation/BMI%20Calculator.png" width="650" >
 
-## Nutrition Tips
+### Nutrition Tips 
 
 Versto App also provide a landing page for nutrition tips, each page below will be updated with more relevant and accurate information based on expert and research paper. We believe user should have more access to accurate information for their health, mental and body improvement.
 
 <img src="Readme%20Documentation/Nutrition%20Tips.png" width="650">
 
-<img src="Readme%20Documentation/Nutrition%20Tips%202.png" width="650">
+## Contact Person
+[![Linkedin Badge](https://img.shields.io/badge/-Alyuza_Satrio_Prayogo-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/alyuzasp/) [![Linkedin Badge](https://img.shields.io/badge/-Ireng_Febrian_Sanjaya-darkred?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/ireng-febrian-sanjaya-6a79211a7/)
 
-<img src="Readme%20Documentation/Nutrition%20Tips%203.png" width="650">
+Thank you for visiting this repository and being a part of the community. Your support is crucial to the success of this project. If you have any questions or suggestions, please don't hesitate to reach out. 
