@@ -1,12 +1,12 @@
 require("dotenv").config();
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
+const { corsOptions } = require("./middleware/cors");
+const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const authMiddleware = require("./middleware/authentication-middleware");
 const databaseMiddleware = require("./middleware/database-middleware");
-// const { corsOptions } = require("./middleware/cors");
 const userRouter = require("./routes/userRoutes");
 const workoutRouter = require("./routes/workoutRoutes");
 const dbConnection = require("./config/dbconfig");
@@ -14,8 +14,8 @@ const { applyHelmet } = require("./middleware/helmet");
 const bmiCalculatorRouter = require("./routes/bmiCalculatorRoutes");
 
 const app = express();
+app.use(cors(corsOptions));
 dbConnection();
-// app.use(cors(corsOptions));
 applyHelmet(app);
 app.use(cookieParser());
 app.use(bodyParser.json());
