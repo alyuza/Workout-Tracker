@@ -1,5 +1,5 @@
 // ModalProfile.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Modal,
   Slide,
@@ -8,22 +8,45 @@ import {
   Divider,
   Button,
 } from '@mui/material';
+import axios from 'axios';
+import { API } from '../pages/utils/API';
 
 interface ModalProfileProps {
   open: boolean;
   onClose: () => void;
-  profileData: {
-    fullName: string;
-    username: string;
-  };
 }
 
-const ModalProfile: React.FC<ModalProfileProps> = ({ open, onClose, profileData }) => {
+interface ProfileData {
+  fullname: string;
+  username: string;
+}
+
+const ModalProfile: React.FC<ModalProfileProps> = ({ open, onClose }) => {
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const validate = localStorage.getItem('token');
+      try {
+        const response = await axios.get(API + '/api/profile', {
+          headers: { Authorization: `Bearer ${validate}` },
+        });
+        setProfileData(response.data.data);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+
+    if (open) {
+      fetchData();
+    }
+  }, [open]);
+
   return (
     <Modal open={open} onClose={onClose} closeAfterTransition>
       <Slide direction="up" in={open} mountOnEnter unmountOnExit>
         <Paper
-          sx={{
+           sx={{
             position: 'absolute',
             top: '30%',
             left: '40%',
@@ -37,8 +60,14 @@ const ModalProfile: React.FC<ModalProfileProps> = ({ open, onClose, profileData 
         >
           <Typography variant="h6">Profile</Typography>
           <Divider />
-          <Typography>Full Name: {profileData.fullName}</Typography>
-          <Typography>Username: {profileData.username}</Typography>
+          {profileData ? (
+            <>
+              <Typography>Full Name: {profileData.fullname}</Typography>
+              <Typography>Username: {profileData.username}</Typography>
+            </>
+          ) : (
+            <Typography>Loading...</Typography>
+          )}
           <Button onClick={onClose}>Close</Button>
         </Paper>
       </Slide>
