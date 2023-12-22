@@ -6,6 +6,7 @@ A fitness tracker app that helps users monitor their workouts, calculate BMI, an
 
 - [VERSTO APP](#versto-app)
   - [Table of Contents](#table-of-contents)
+  - [FLOW CHART](#flow-chart)
   - [Features](#features)
   - [Installation](#installation)
     - [Frontend (React with TypeScript)](#frontend-react-with-typescript)
@@ -19,6 +20,12 @@ A fitness tracker app that helps users monitor their workouts, calculate BMI, an
   - [Nutrition Tips](#nutrition-tips)
   - [Acknowledgements](#acknowledgements)
   - [Access Link](#access-link)
+
+## FLOW CHART
+
+Before we started the whole project, we do planning, strategizing and make it into a flow chart to make sure that our idea is on track. Here is the flow chart picture;
+<img src="Readme%20Documentation/Workout_Tracker_-_Final_Project.drawio.png" width="1000">
+
 
 ## Features
 
@@ -65,13 +72,14 @@ A fitness tracker app that helps users monitor their workouts, calculate BMI, an
 
 ## Usage
 Versto App is a user friendly app for all age, gender and race. We're providing a simple page for user from register, login, workout tracking (running, cycling, swimming), bmi calculator and nutrition tips. Here's below for more detail;
-![register](Readme%20Documentation/Register%20Page.png)
-![login](Readme%20Documentation/Login%20Page.png)
-![running](Readme%20Documentation/Running%20Activity.png)
-![addactivity](Readme%20Documentation/Add%20Activity.png)
-![menu](Readme%20Documentation/Menu.png)
-![cycling](Readme%20Documentation/Cycling.png)
-![swimming](Readme%20Documentation/Swimming%20Activity.png)
+<img src="Readme%20Documentation/Register%20Page.png" width="650">
+<img src="Readme%20Documentation/Login%20Page.png" width="650">
+<img src="Readme%20Documentation/Running%20Activity.png" width="650">
+<img src="Readme%20Documentation/Add%20Activity.png" width="650">
+<img src="Readme%20Documentation/Menu.png" width="650" height="800">
+<img src="Readme%20Documentation/Cycling.png" width="650">
+<img src="Readme%20Documentation/Swimming%20Activity.png" width="650">
+
 
 
 
@@ -117,14 +125,13 @@ On this app, you can use BMI Calculator by input the weight, height and age box 
 | **Overweight**              |  < 29.9       |
 | **Obese**                   |  > 29.9       |
 
-![bmicalculator](Readme%20Documentation/BMI%20Calculator.png)
-
+<img src="Readme%20Documentation/BMI%20Calculator.png" width="650" height="450">
 
 ## Nutrition Tips
 Versto App also provide a landing page for nutrition tips, each page below will be updated with more relevant and accurate information based on expert and research paper. We believe user should have more access to accurate information for their health, mental and body improvement.
-![nutrition1](Readme%20Documentation/Nutrition%20Tips.png)
-![nutrition2](Readme%20Documentation/Nutrition%20Tips%202.png)
-![nutrition](Readme%20Documentation/Nutrition%20Tips%203.png)
+<img src="Readme%20Documentation/Nutrition%20Tips.png" width="650">
+<img src="Readme%20Documentation/Nutrition%20Tips%202.png" width="650">
+<img src="Readme%20Documentation/Nutrition%20Tips%203.png" width="650">
 
 ## Acknowledgements
 - Material-UI
@@ -139,5 +146,5 @@ Versto App also provide a landing page for nutrition tips, each page below will 
 
 ## Access Link
 You access Frontend and Backend with link below;
-Frontend: https://www.versto.site
-Backend: https://workout-tracker-server-navy.vercel.app
+Frontend: [https://www.versto.site](https://www.versto.site)
+Backend: [https://workout-tracker-server-navy.vercel.app](https://workout-tracker-server-navy.vercel.app)
