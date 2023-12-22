@@ -74,7 +74,27 @@ const login = async (req, res) => {
 	}
 };
 
+const profile = async (req, res) => {
+	const usernameInput = req.username;
+	try {
+		const userData = await req.db.collection("users").find({ username: usernameInput }).toArray();
+		if (!userData) {
+			return res.status(404).json({
+				message: "User not found",
+			});
+		}
+		res.status(200).json({
+			message: "Success get profile data",
+			data: userData,
+		});
+
+	} catch (error) {
+		res.status(400).json({ error: error.message });
+	}
+};
+
 module.exports = {
 	register,
 	login,
+	profile
 };
