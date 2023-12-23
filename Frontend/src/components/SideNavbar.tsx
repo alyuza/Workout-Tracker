@@ -94,7 +94,7 @@ const SideNav: React.FC = () => {
   const drawer = (
     <Box style={{ width: '250px', backgroundColor: 'white', height: '100vh' }}>
       <List>
-        {['Running', 'Cycling', 'Swimming', 'BMI Calculator', 'Nutrition Tips'].map((text, index) => (
+        {['Running', 'Cycling', 'Swimming', 'BMI Calculator', 'Healthy Tips'].map((text, index) => (
           <ListItem key={text} disablePadding sx={{ '&:hover': { backgroundColor: '#1de9b6' } }}>
             <ListItemButton onClick={() => handleMenuClick(text)}>
               <ListItemIcon>{icons[index]}</ListItemIcon>
