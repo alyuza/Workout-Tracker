@@ -18,7 +18,7 @@ const Tips: React.FC = () => {
     <>
       <SideNav />
       <Typography variant="h3" textAlign="center" fontWeight="bold" color="maroon" mt={8} mb={8}>
-        Nutrition & Tips
+        Healthy Tips
       </Typography>
   
       <Container className={'containerItem'}>
