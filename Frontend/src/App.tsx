@@ -15,7 +15,7 @@ function App() {
           <Route path='/cycling' element={< CyclingDashboard />} />
           <Route path='/swimming' element={< SwimmingDashboard />} />
           <Route path='/bmi-calculator' element={< BmiCalculator />} />
-          <Route path='/nutrition-tips' element={< Tips />} />
+          <Route path='/healthy-tips' element={< Tips />} />
         </Routes>
       </Router>
     </>
