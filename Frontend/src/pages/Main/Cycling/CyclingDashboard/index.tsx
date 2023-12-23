@@ -1,24 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import SideNav from '../../../../components/SideNavbar';
-import {
-  Button,
-  Divider,
-  Paper,
-  TablePagination,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-} from '@mui/material';
+import { Button, Divider, Paper, TablePagination, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
+import SideNav from '../../../../components/SideNavbar';
 import { useNavigate } from 'react-router-dom';
 import { API } from '../../../utils/API';
 import Footer from '../../../../components/Footer';
 import mapsImage from '../../../image/maps.jpg';
-import Swal from 'sweetalert2';
 import './style.css'
 
 interface Activity {
@@ -67,14 +57,13 @@ const CyclingDashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const cyclingActivities = dataList.filter((activity) => activity.activityType === 'cycling');
+    const cyclingActivities = dataList.filter((activity) => activity.activityType === 'cycling'); // filtering activity type
     setFilteredData(cyclingActivities);
   }, [dataList]);
 
   const totalDistance = filteredData.reduce((acc, activity) => acc + activity.distance, 0);
   const totalTime = filteredData.reduce((acc, activity) => acc + activity.time, 0);
   const totalCalorie = filteredData.reduce((acc, activity) => acc + activity.calorie, 0);
-
   const fetchData = async () => {
     try {
       const response = await axios.get(API + '/api/tasks', {
@@ -86,42 +75,33 @@ const CyclingDashboard: React.FC = () => {
     }
   };
 
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+    if (!formData.title.trim()) {
+      errors.title = 'Title is required';
+    }
+    if (!formData.description.trim()) {
+      errors.description = 'Description is required';
+    }
+    if (formData.distance <= 0) {
+      errors.distance = 'Distance should be more than 0';
+    }
+    if (formData.time <= 0) {
+      errors.time = 'Time should be more than 0';
+    }
+    const selectedDate = new Date(formData.date);
+    if (isNaN(selectedDate.getTime())) {
+      errors.date = 'Date is required';
+    }
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleChangePage = (
     _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
-  };
-
-  const validateForm = () => {
-    const errors: Record<string, string> = {};
-
-    if (!formData.title.trim()) {
-      errors.title = 'Title is required';
-    }
-
-    if (!formData.description.trim()) {
-      errors.description = 'Description is required';
-    }
-
-    if (formData.distance <= 0) {
-      errors.distance = 'Distance should be more than 0';
-    }
-
-    if (formData.time <= 0) {
-      errors.time = 'Time should be more than 0';
-    }
-
-     // Validate date
-     const selectedDate = new Date(formData.date);
-
-     if (isNaN(selectedDate.getTime())) {
-       errors.date = 'Date is required';
-     }
- 
-
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
   };
 
   const handleEdit = (activity: Activity) => {
@@ -196,13 +176,7 @@ const CyclingDashboard: React.FC = () => {
       <SideNav />
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Paper className={'paperDashboard'}
-          sx={{
-            borderRadius: '20px',
-            backgroundColor: 'white',
-            color: 'black',
-            margin: '10px',
-            flexGrow: 1,
-          }}
+          sx={{ borderRadius: '20px', backgroundColor: 'white', color: 'black', margin: '10px', flexGrow: 1, }}
           elevation={5}
         >
           <Box sx={{ padding: '30px' }}>
@@ -270,11 +244,7 @@ const CyclingDashboard: React.FC = () => {
                       <Button variant="outlined" onClick={() => handleEdit(activity)} sx={{ mr: 1 }}>
                         Edit
                       </Button>
-                      <Button
-                        variant="outlined"
-                        color="error"
-                        onClick={() => handleDelete(activity._id)}
-                      >
+                      <Button variant="outlined" color="error" onClick={() => handleDelete(activity._id)}>
                         Delete
                       </Button>
                     </Box>
