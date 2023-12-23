@@ -114,10 +114,8 @@ const createSwimming = async (req, res) => {
 
 const updateWorkout = async (req, res) => {
 	const id = req.params.id;
-	// const { title, description, distance, time, calorie } = req.body;
-	// const usernameInput = req.username;
+	const { title, description, distance, time, date } = req.body;
 	try {
-		const { title, description, distance, time, date } = req.body;
 		const workout = await req.db
 			.collection("workouts")
 			.findOne({ _id: new ObjectId(id) });
@@ -137,7 +135,7 @@ const updateWorkout = async (req, res) => {
 		} else if (activityType === "swimming") {
 			calorieCostPerKm = 80;
 		}
-		const calories = (calorieCostPerKm * distance * time) / 60;
+		const calorie = (calorieCostPerKm * distance * time) / 60;
 		await req.db.collection("workouts").findOneAndUpdate(
 			{ _id: new ObjectId(id) },
 			{
@@ -147,7 +145,7 @@ const updateWorkout = async (req, res) => {
 					distance,
 					time,
 					date,
-					calories,
+					calorie,
 				},
 			}
 		);
