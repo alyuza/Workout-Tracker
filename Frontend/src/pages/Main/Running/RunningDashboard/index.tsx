@@ -224,10 +224,10 @@ const RunningDashboard: React.FC = () => {
                     </Box>
                     <Box className={'activityDescription'}>
                       <Typography variant="h5" gutterBottom>
-                        Title: {activity.title}
+                        {activity.title}
                       </Typography>
                       <Typography variant="body1" gutterBottom>
-                        Description: {activity.description}
+                        {activity.description}
                       </Typography>
                       <Typography variant="body1" gutterBottom>
                         Distance: {activity.distance.toFixed(1)} km
