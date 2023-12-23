@@ -1,24 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import SideNav from '../../../../components/SideNavbar';
-import {
-  Button,
-  Divider,
-  Paper,
-  TablePagination,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-} from '@mui/material';
+import { Button, Divider, Paper, TablePagination, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
+import SideNav from '../../../../components/SideNavbar';
 import { API } from '../../../utils/API';
 import Footer from '../../../../components/Footer';
 import mapsImage from '../../../image/maps.jpg';
-import Swal from 'sweetalert2';
 import './style.css'
 
 interface Activity {
@@ -38,7 +28,6 @@ const RunningDashboard: React.FC = () => {
   if (!validate) {
     navigate('/');
   }
-
   const [page, setPage] = useState(0);
   const [rowsPerPage] = useState(5);
   const [dataList, setData] = useState<Activity[]>([]);
@@ -67,14 +56,13 @@ const RunningDashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const runningActivities = dataList.filter((activity) => activity.activityType === 'running');
+    const runningActivities = dataList.filter((activity) => activity.activityType === 'running'); // filtering activity type
     setFilteredData(runningActivities);
   }, [dataList]);
 
   const totalDistance = filteredData.reduce((acc, activity) => acc + activity.distance, 0);
   const totalTime = filteredData.reduce((acc, activity) => acc + activity.time, 0);
   const totalCalorie = filteredData.reduce((acc, activity) => acc + activity.calorie, 0);
-
   const fetchData = async () => {
     try {
       const response = await axios.get(API + '/api/tasks', {
@@ -86,41 +74,33 @@ const RunningDashboard: React.FC = () => {
     }
   };
 
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+    if (!formData.title.trim()) {
+      errors.title = 'Title is required';
+    }
+    if (!formData.description.trim()) {
+      errors.description = 'Description is required';
+    }
+    if (formData.distance <= 0) {
+      errors.distance = 'Distance should be more than 0';
+    }
+    if (formData.time <= 0) {
+      errors.time = 'Time should be more than 0';
+    }
+    const selectedDate = new Date(formData.date);
+    if (isNaN(selectedDate.getTime())) {
+      errors.date = 'Date is required';
+    }
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleChangePage = (
     _event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
-  };
-
-  const validateForm = () => {
-    const errors: Record<string, string> = {};
-
-    if (!formData.title.trim()) {
-      errors.title = 'Title is required';
-    }
-
-    if (!formData.description.trim()) {
-      errors.description = 'Description is required';
-    }
-
-    if (formData.distance <= 0) {
-      errors.distance = 'Distance should be more than 0';
-    }
-
-    if (formData.time <= 0) {
-      errors.time = 'Time should be more than 0';
-    }
-
-    // Validate date
-    const selectedDate = new Date(formData.date);
-
-    if (isNaN(selectedDate.getTime())) {
-      errors.date = 'Date is required';
-    }
-
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
   };
 
   const handleEdit = (activity: Activity) => {
@@ -230,12 +210,7 @@ const RunningDashboard: React.FC = () => {
               .map((activity, index) => (
                 <Paper
                   key={index}
-                  sx={{
-                    borderRadius: '15px',
-                    margin: '10px',
-                    padding: '20px',
-                    backgroundColor: 'white',
-                  }}
+                  sx={{ borderRadius: '15px', margin: '10px', padding: '20px', backgroundColor: 'white', }}
                   elevation={2}
                 ><Box className={'activityBox'}>
                     <Box className={'activityImage'}>
@@ -269,11 +244,7 @@ const RunningDashboard: React.FC = () => {
                       <Button variant="outlined" onClick={() => handleEdit(activity)} sx={{ mr: 1 }}>
                         Edit
                       </Button>
-                      <Button
-                        variant="outlined"
-                        color="error"
-                        onClick={() => handleDelete(activity._id)}
-                      >
+                      <Button variant="outlined" color="error" onClick={() => handleDelete(activity._id)}>
                         Delete
                       </Button>
                     </Box>
@@ -368,6 +339,7 @@ const RunningDashboard: React.FC = () => {
             </DialogActions>
           </Dialog>
 
+          {/*Edit Modal*/}
           <Dialog open={isEditModalOpen} onClose={handleEditModalClose}>
             <DialogTitle>Edit Activity</DialogTitle>
             <DialogContent>
